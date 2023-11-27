@@ -102,11 +102,40 @@
             <img class="img-fluid me-3" src="img/icon/icon-10.png" alt="Icon">
             <h1 class="m-0 text-primary">Adopter</h1>
         <!-- Caseta de căutare -->
-        <div class="search-box d-flex">
-            <input id="searchInput" class="form-control border-0" type="text" placeholder="Search...">            
+        <div class="search-container d-none d-lg-flex ms-2">
+            <input type="text" id="search-input" placeholder="Search...">
             <button onclick="searchAndHighlight()">Search</button>
-
         </div>
+        <script>
+        function searchAndHighlight() {
+            var searchTerm = document.getElementById('search-input').value.trim();
+            if (searchTerm === "") return;
+
+            var body = document.getElementsByTagName("body")[0];
+            removeHighlight(body);
+
+            if (window.find && window.getSelection) {
+                document.designMode = "on";
+                var sel = window.getSelection();
+                sel.collapse(document.body, 0);
+
+                while (window.find(searchTerm)) {
+                    document.execCommand("HiliteColor", false, "yellow");
+                    sel.collapseToEnd();
+                }
+
+                document.designMode = "off";
+            }
+        }
+
+        function removeHighlight(element) {
+            var highlighted = element.querySelectorAll(".highlight");
+            highlighted.forEach(function (item) {
+                var parent = item.parentNode;
+                parent.replaceChild(document.createTextNode(item.textContent), item);
+            });
+        }
+    </script>
         </a>
         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
@@ -639,36 +668,7 @@ Free parking during the visit.</span>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="lib/lightbox/js/lightbox.min.js"></script>
 
-<script>
-        function searchAndHighlight() {
-            var searchTerm = document.getElementById('search-input').value.trim();
-            if (searchTerm === "") return;
 
-            var body = document.getElementsByTagName("body")[0];
-            removeHighlight(body);
-
-            if (window.find && window.getSelection) {
-                document.designMode = "on";
-                var sel = window.getSelection();
-                sel.collapse(document.body, 0);
-
-                while (window.find(searchTerm)) {
-                    document.execCommand("HiliteColor", false, "yellow");
-                    sel.collapseToEnd();
-                }
-
-                document.designMode = "off";
-            }
-        }
-
-        function removeHighlight(element) {
-            var highlighted = element.querySelectorAll(".highlight");
-            highlighted.forEach(function (item) {
-                var parent = item.parentNode;
-                parent.replaceChild(document.createTextNode(item.textContent), item);
-            });
-        }
-    </script>
         
 <!-- Scriptul pentru validare și acțiuni buton SignUp -->
 <script>
