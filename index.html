@@ -633,7 +633,16 @@ Free parking during the visit.</span>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="lib/lightbox/js/lightbox.min.js"></script>
 
-
+<script>
+    $(document).ready(function() {
+        $('#searchButton').on('click', function() {
+            var searchTerm = $('#searchInput').val();
+            alert('Căutare: ' + searchTerm);
+            // Aici poți adăuga logica de căutare sau alte acțiuni dorite
+        });
+    });
+</script>
+        
 <!-- Scriptul pentru validare și acțiuni buton SignUp -->
 <script>
     $(document).ready(function() {
