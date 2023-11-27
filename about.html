@@ -90,8 +90,44 @@
         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
+                
         <div class="collapse navbar-collapse py-4 py-lg-0" id="navbarCollapse">
             <div class="navbar-nav ms-auto">
+                    <!-- Caseta de căutare -->
+        <div class="search-container d-none d-lg-flex ms-2">
+            <input type="text" id="search-input" placeholder="Search...">
+            <button onclick="searchAndHighlight()">Search</button>
+        </div>
+        <script>
+        function searchAndHighlight() {
+            var searchTerm = document.getElementById('search-input').value.trim();
+            if (searchTerm === "") return;
+
+            var body = document.getElementsByTagName("body")[0];
+            removeHighlight(body);
+
+            if (window.find && window.getSelection) {
+                document.designMode = "on";
+                var sel = window.getSelection();
+                sel.collapse(document.body, 0);
+
+                while (window.find(searchTerm)) {
+                    document.execCommand("HiliteColor", false, "yellow");
+                    sel.collapseToEnd();
+                }
+
+                document.designMode = "off";
+            }
+        }
+
+        function removeHighlight(element) {
+            var highlighted = element.querySelectorAll(".highlight");
+            highlighted.forEach(function (item) {
+                var parent = item.parentNode;
+                parent.replaceChild(document.createTextNode(item.textContent), item);
+            });
+        }
+    </script>
                 <a href="index.html" class="nav-item nav-link">Home</a>
                 <a href="about.html" class="nav-item nav-link active">About</a>
                 <a href="service.html" class="nav-item nav-link">Services</a>
