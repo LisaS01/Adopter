@@ -2,6 +2,11 @@
 <html lang="en">
 
 <head>
+<style>
+.highlight {
+    background-color: yellow;
+}
+</style>
         <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-514WJ51QDY"></script>
 <script>
@@ -100,6 +105,8 @@
         <div class="search-box d-flex">
             <input id="searchInput" class="form-control border-0" type="text" placeholder="Search...">
             <button id="searchButton" class="btn btn-primary" type="button"><i class="bi bi-search"></i></button>
+            <button onclick="searchAndHighlight()">Search</button>
+
         </div>
         </a>
         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -634,14 +641,35 @@ Free parking during the visit.</span>
     <script src="lib/lightbox/js/lightbox.min.js"></script>
 
 <script>
-    $(document).ready(function() {
-        $('#searchButton').on('click', function() {
-            var searchTerm = $('#searchInput').val();
-            alert('Căutare: ' + searchTerm);
-            // Aici poți adăuga logica de căutare sau alte acțiuni dorite
-        });
-    });
-</script>
+        function searchAndHighlight() {
+            var searchTerm = document.getElementById('search-input').value.trim();
+            if (searchTerm === "") return;
+
+            var body = document.getElementsByTagName("body")[0];
+            removeHighlight(body);
+
+            if (window.find && window.getSelection) {
+                document.designMode = "on";
+                var sel = window.getSelection();
+                sel.collapse(document.body, 0);
+
+                while (window.find(searchTerm)) {
+                    document.execCommand("HiliteColor", false, "yellow");
+                    sel.collapseToEnd();
+                }
+
+                document.designMode = "off";
+            }
+        }
+
+        function removeHighlight(element) {
+            var highlighted = element.querySelectorAll(".highlight");
+            highlighted.forEach(function (item) {
+                var parent = item.parentNode;
+                parent.replaceChild(document.createTextNode(item.textContent), item);
+            });
+        }
+    </script>
         
 <!-- Scriptul pentru validare și acțiuni buton SignUp -->
 <script>
